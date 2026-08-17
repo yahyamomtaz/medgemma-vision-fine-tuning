@@ -1,20 +1,3 @@
----
-base_model: unsloth/medgemma-4b-it-bnb-4bit
-library_name: peft
-model_name: medgemma-4b-it-sft-lora-bbbc006-z16
-tags:
-- base_model:adapter:unsloth/medgemma-4b-it-bnb-4bit
-- lora
-- sft
-- transformers
-- trl
-- unsloth
-license: other
-license_name: health-ai-developer-foundations
-license_link: https://developers.google.com/health-ai-developer-foundations/terms
-pipeline_tag: image-text-to-text
----
-
 # MedGemma Vision Fine-Tuning
 
 <img src="https://raw.githubusercontent.com/unslothai/unsloth/main/images/made%20with%20unsloth.png" width="200" style="display: block; margin: 20px auto;" > 
@@ -180,3 +163,19 @@ If you use this adapter, cite BBBC006.
   year={2012}
 }
 ```
+---
+base_model: unsloth/medgemma-4b-it-bnb-4bit
+library_name: peft
+model_name: medgemma-4b-it-sft-lora-bbbc006-z16
+tags:
+- base_model:adapter:unsloth/medgemma-4b-it-bnb-4bit
+- lora
+- sft
+- transformers
+- trl
+- unsloth
+license: other
+license_name: health-ai-developer-foundations
+license_link: https://developers.google.com/health-ai-developer-foundations/terms
+pipeline_tag: image-text-to-text
+---

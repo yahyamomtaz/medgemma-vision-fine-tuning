@@ -1,0 +1,142 @@
+{
+  "metrics": {
+    "samples": 10,
+    "valid_predictions": 10,
+    "mae": 3.6,
+    "rmse": 4.5607,
+    "mape": 3.5606,
+    "note": "Metrics cover the deterministic post-training subset of the held-out, well-disjoint development split."
+  },
+  "results": [
+    {
+      "image_id": "mcf-z-stacks-03212011_d06_s1_w17df2cc7c-1b29-41e3-a041-30e98fab0a84",
+      "image_path": "data/BBBC006_v1_images_z_16/mcf-z-stacks-03212011_d06_s1_w17df2cc7c-1b29-41e3-a041-30e98fab0a84.tif",
+      "well": "D06",
+      "site": "1",
+      "reference_count": 118,
+      "width": 696,
+      "height": 520,
+      "mode": "I;16",
+      "prediction": "{\"nuclei_count\":119}",
+      "predicted_nuclei_count": 119.0,
+      "absolute_error": 1.0
+    },
+    {
+      "image_id": "mcf-z-stacks-03212011_c18_s1_w1be995b2c-30f1-43fc-ad8e-10389b1ca43d",
+      "image_path": "data/BBBC006_v1_images_z_16/mcf-z-stacks-03212011_c18_s1_w1be995b2c-30f1-43fc-ad8e-10389b1ca43d.tif",
+      "well": "C18",
+      "site": "1",
+      "reference_count": 130,
+      "width": 696,
+      "height": 520,
+      "mode": "I;16",
+      "prediction": "{\"nuclei_count\":129}",
+      "predicted_nuclei_count": 129.0,
+      "absolute_error": 1.0
+    },
+    {
+      "image_id": "mcf-z-stacks-03212011_i12_s1_w11f2da6ed-794d-4b9d-a126-9fb26a6d099c",
+      "image_path": "data/BBBC006_v1_images_z_16/mcf-z-stacks-03212011_i12_s1_w11f2da6ed-794d-4b9d-a126-9fb26a6d099c.tif",
+      "well": "I12",
+      "site": "1",
+      "reference_count": 64,
+      "width": 696,
+      "height": 520,
+      "mode": "I;16",
+      "prediction": "{\"nuclei_count\":60}",
+      "predicted_nuclei_count": 60.0,
+      "absolute_error": 4.0
+    },
+    {
+      "image_id": "mcf-z-stacks-03212011_o17_s2_w17bd08631-6237-4454-b912-f674e92db6d6",
+      "image_path": "data/BBBC006_v1_images_z_16/mcf-z-stacks-03212011_o17_s2_w17bd08631-6237-4454-b912-f674e92db6d6.tif",
+      "well": "O17",
+      "site": "2",
+      "reference_count": 114,
+      "width": 696,
+      "height": 520,
+      "mode": "I;16",
+      "prediction": "{\"nuclei_count\":119}",
+      "predicted_nuclei_count": 119.0,
+      "absolute_error": 5.0
+    },
+    {
+      "image_id": "mcf-z-stacks-03212011_c19_s1_w114a5659f-3099-4d7b-b8f8-13d32cbc1cb1",
+      "image_path": "data/BBBC006_v1_images_z_16/mcf-z-stacks-03212011_c19_s1_w114a5659f-3099-4d7b-b8f8-13d32cbc1cb1.tif",
+      "well": "C19",
+      "site": "1",
+      "reference_count": 135,
+      "width": 696,
+      "height": 520,
+      "mode": "I;16",
+      "prediction": "{\"nuclei_count\":141}",
+      "predicted_nuclei_count": 141.0,
+      "absolute_error": 6.0
+    },
+    {
+      "image_id": "mcf-z-stacks-03212011_m12_s2_w13803da9c-c8dc-4d6e-8e63-497ef5427f67",
+      "image_path": "data/BBBC006_v1_images_z_16/mcf-z-stacks-03212011_m12_s2_w13803da9c-c8dc-4d6e-8e63-497ef5427f67.tif",
+      "well": "M12",
+      "site": "2",
+      "reference_count": 111,
+      "width": 696,
+      "height": 520,
+      "mode": "I;16",
+      "prediction": "{\"nuclei_count\":111}",
+      "predicted_nuclei_count": 111.0,
+      "absolute_error": 0.0
+    },
+    {
+      "image_id": "mcf-z-stacks-03212011_h12_s1_w1b37e6de5-1eb0-4f8e-840e-eb1f7e913363",
+      "image_path": "data/BBBC006_v1_images_z_16/mcf-z-stacks-03212011_h12_s1_w1b37e6de5-1eb0-4f8e-840e-eb1f7e913363.tif",
+      "well": "H12",
+      "site": "1",
+      "reference_count": 109,
+      "width": 696,
+      "height": 520,
+      "mode": "I;16",
+      "prediction": "{\"nuclei_count\":101}",
+      "predicted_nuclei_count": 101.0,
+      "absolute_error": 8.0
+    },
+    {
+      "image_id": "mcf-z-stacks-03212011_c17_s1_w1f6d0ec3a-d46c-4cc1-9567-64c1e0da1746",
+      "image_path": "data/BBBC006_v1_images_z_16/mcf-z-stacks-03212011_c17_s1_w1f6d0ec3a-d46c-4cc1-9567-64c1e0da1746.tif",
+      "well": "C17",
+      "site": "1",
+      "reference_count": 81,
+      "width": 696,
+      "height": 520,
+      "mode": "I;16",
+      "prediction": "{\"nuclei_count\":81}",
+      "predicted_nuclei_count": 81.0,
+      "absolute_error": 0.0
+    },
+    {
+      "image_id": "mcf-z-stacks-03212011_k07_s2_w1538c9735-aadb-4b1f-b728-1c06a9d52418",
+      "image_path": "data/BBBC006_v1_images_z_16/mcf-z-stacks-03212011_k07_s2_w1538c9735-aadb-4b1f-b728-1c06a9d52418.tif",
+      "well": "K07",
+      "site": "2",
+      "reference_count": 92,
+      "width": 696,
+      "height": 520,
+      "mode": "I;16",
+      "prediction": "{\"nuclei_count\":85}",
+      "predicted_nuclei_count": 85.0,
+      "absolute_error": 7.0
+    },
+    {
+      "image_id": "mcf-z-stacks-03212011_f20_s2_w17f821b9a-6dc2-45ec-a157-db6ea00301d2",
+      "image_path": "data/BBBC006_v1_images_z_16/mcf-z-stacks-03212011_f20_s2_w17f821b9a-6dc2-45ec-a157-db6ea00301d2.tif",
+      "well": "F20",
+      "site": "2",
+      "reference_count": 101,
+      "width": 696,
+      "height": 520,
+      "mode": "I;16",
+      "prediction": "{\"nuclei_count\":105}",
+      "predicted_nuclei_count": 105.0,
+      "absolute_error": 4.0
+    }
+  ]
+}

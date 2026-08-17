@@ -1,0 +1,47 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# MedGemma 4B Fine-Tuning — Python dependencies
+# Install with:  pip install -r requirements.txt
+#
+# Tested with Python 3.11 / 3.12 on Linux + CUDA 12.1+
+#
+# NOTE: unsloth must be installed AFTER torch so it picks up the right CUDA
+#       version. Follow the order below.
+# ─────────────────────────────────────────────────────────────────────────────
+
+# ── Core deep learning ───────────────────────────────────────────────────────
+# Install PyTorch first (with the CUDA version that matches your cluster).
+# Example for CUDA 12.1:
+#   pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
+# Then install the rest:
+
+torch>=2.2.0          # minimum for unsloth & bitsandbytes compatibility
+torchvision>=0.17.0
+torchaudio>=2.2.0
+
+# ── Quantisation ─────────────────────────────────────────────────────────────
+bitsandbytes>=0.43.0  # 4-bit / 8-bit quantisation; requires CUDA ≥ 11.8
+
+# ── Unsloth (fast LoRA training) ─────────────────────────────────────────────
+# unsloth must be installed AFTER torch
+unsloth>=2024.9.0
+unsloth-zoo>=2024.9.0
+
+# ── HuggingFace stack ─────────────────────────────────────────────────────────
+transformers>=4.44.0
+datasets>=2.20.0
+peft>=0.12.0
+trl>=0.10.0
+accelerate>=0.33.0
+huggingface_hub>=0.24.0
+tokenizers>=0.19.0
+
+# ── Logging / monitoring ─────────────────────────────────────────────────────
+tensorboard>=2.17.0
+
+# ── Utilities ────────────────────────────────────────────────────────────────
+numpy>=1.26.0
+Pillow>=10.0.0       # TIFF loading and RGB conversion for vision fine-tuning
+packaging>=24.0
+safetensors>=0.4.3
+sentencepiece>=0.2.0   # required by some Gemma tokenizer variants
+protobuf>=4.25.0       # sentencepiece dependency

@@ -122,15 +122,148 @@ Use this adapter for research experiments that investigate whether a vision-lang
 
 It is not intended for cell segmentation, instance-level nucleus localization, clinical microscopy, general cell counting, or measurements without quality control.
 
-## Quick start
+## Quick start: reproduce training and evaluation
 
-```python
-from transformers import pipeline
+### 1. Clone the repository
 
-question = "If you had a time machine, but could only go to the past or the future once and never return, which would you choose and why?"
-generator = pipeline("text-generation", model="None", device="cuda")
-output = generator([{"role": "user", "content": question}], max_new_tokens=128, return_full_text=False)[0]
-print(output["generated_text"])
+```bash
+git clone https://github.com/yahyamomtaz/medgemma-vision-fine-tuning.git
+cd medgemma-vision-fine-tuning
+```
+
+### 2. Create an environment and install the requirements
+
+Python 3.11 or 3.12 is recommended.
+
+```bash
+python3.11 -m venv .venv
+source .venv/bin/activate
+python -m pip install --upgrade pip
+python -m pip install torch torchvision torchaudio \
+  --index-url https://download.pytorch.org/whl/cu121
+python -m pip install -r requirements.txt
+```
+
+Accept the applicable MedGemma terms and authenticate with Hugging Face before
+downloading the gated base model:
+
+```bash
+hf auth login
+```
+
+### 3. Download the BBBC006 files
+
+This counting experiment needs only the optimal-focus `z=16` image archive and
+the counts CSV. It does **not** require all 34 z-plane archives or
+`BBBC006_v1_labels.zip`;
+
+```bash
+mkdir -p data
+curl -L \
+  https://data.broadinstitute.org/bbbc/BBBC006/BBBC006_v1_images_z_16.zip \
+  -o data/BBBC006_v1_images_z_16.zip
+unzip data/BBBC006_v1_images_z_16.zip -d data
+curl -L \
+  https://data.broadinstitute.org/bbbc/BBBC006/BBBC006_v1_counts.csv \
+  -o data/BBBC006_v1_counts.csv
+```
+
+The expected layout is:
+
+```text
+data/
+├── BBBC006_v1_counts.csv
+└── BBBC006_v1_images_z_16/
+    └── *.tif
+```
+
+The image archive contains both `w1` and `w2` channels. The training script
+automatically selects the 768 `w1` Hoechst/DAPI images and matches them to the
+CSV by well and site; the UUID portions of the filenames are not expected to
+match.
+
+### 4. Validate the data and create the split
+
+Run a dry run first. It performs file matching and creates the deterministic
+well-disjoint manifests without loading or training the model.
+
+```bash
+python fine_tune_medgemma_vision.py \
+  --images_dir data/BBBC006_v1_images_z_16 \
+  --counts_file data/BBBC006_v1_counts.csv \
+  --manifest_dir data/bbbc006_z16_vision \
+  --dry_run
+```
+
+Check that it reports 768 matched `w1` images, with 614 training images from
+307 wells and 154 evaluation images from 77 wells.
+
+### 5. Fine-tune the LoRA adapter
+
+```bash
+python -u fine_tune_medgemma_vision.py \
+  --model_name unsloth/medgemma-4b-it-bnb-4bit \
+  --images_dir data/BBBC006_v1_images_z_16 \
+  --counts_file data/BBBC006_v1_counts.csv \
+  --manifest_dir data/bbbc006_z16_vision \
+  --output_dir models/medgemma-4b-it-sft-lora-bbbc006-z16 \
+  --epochs 5 \
+  --prediction_samples 10
+```
+
+This saves the adapter under
+`models/medgemma-4b-it-sft-lora-bbbc006-z16/` and prints predictions for 10
+held-out images at the end of training.
+
+### 6. Evaluate all images
+
+Evaluate the fine-tuned adapter on the complete 154-image evaluation manifest:
+
+```bash
+python -u evaluation.py \
+  --model_name_or_path models/medgemma-4b-it-sft-lora-bbbc006-z16 \
+  --eval_file data/bbbc006_z16_vision/eval.jsonl \
+  --train_file data/bbbc006_z16_vision/train.jsonl \
+  --output_file models/medgemma-4b-it-sft-lora-bbbc006-z16/full_eval_predictions.json
+```
+
+For a baseline comparison, run the same evaluator on the same
+manifest with the base model:
+
+```bash
+mkdir -p results
+python -u evaluation.py \
+  --model_name_or_path unsloth/medgemma-4b-it-bnb-4bit \
+  --eval_file data/bbbc006_z16_vision/eval.jsonl \
+  --train_file data/bbbc006_z16_vision/train.jsonl \
+  --output_file results/medgemma_base_bbbc006_z16_full_eval_predictions.json
+```
+
+## Use the fine-tuned model
+
+The adapter can be loaded directly from Hugging Face or from the local output
+directory created during training. Because this is a LoRA adapter,
+`FastVisionModel.from_pretrained` also loads its declared base model,
+`unsloth/medgemma-4b-it-bnb-4bit`.
+
+Use the
+[inference.py](https://github.com/yahyamomtaz/medgemma-vision-fine-tuning/blob/main/inference.py)
+script with a `z=16`, `w1` Hoechst/DAPI TIFF. By default it downloads and uses
+the published Hugging Face adapter:
+
+```bash
+python inference.py \
+  data/BBBC006_v1_images_z_16/mcf-z-stacks-03212011_a01_s1_w1248254b0-0193-4e11-8762-62b5d2b86216.tif
+```
+
+The result would be:
+
+```json
+{
+  "image_path": "data/BBBC006_v1_images_z_16/mcf-z-stacks-03212011_a01_s1_w1248254b0-0193-4e11-8762-62b5d2b86216.tif",
+  "raw_response": "{\"nuclei_count\":87}",
+  "predicted_nuclei_count": 87
+}
 ```
 
 
@@ -163,6 +296,7 @@ If you use this adapter, cite BBBC006.
   year={2012}
 }
 ```
+
 ---
 base_model: unsloth/medgemma-4b-it-bnb-4bit
 library_name: peft
